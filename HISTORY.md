@@ -14,6 +14,9 @@ Running Kingdom
 	* Modelでどうやるかを調べてもすぐにはわからず。結局、dbosource::expressionを使うといのをここで発見した。 http://stackoverflow.com/questions/5864879/how-to-use-mysql-now-function-in-cakephp-for-date-fields
 	* 無駄に時間を使ってしまった。
 	* とりあえず、Modelのset()とsave($data)をoverrideして実装した。
+* 次の処理はファイルアップロード->スクリプトで前処理->DB投入まで。
+	* upload.ctpを作って、ファイルアップロードページを作成しようとしているところで時間切れ。
+
 
 2013.3.26
 --------------------
