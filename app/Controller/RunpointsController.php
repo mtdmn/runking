@@ -7,8 +7,6 @@ class RunpointsController extends AppController {
 
     public function index() {
         $this->set('runpoints', $this->Runpoint->find('all'));
-//        $this->set('points', $this->Point->find('textpoint',array('fields'=>$fields)));
-//        $this->set('points', $this->Point->find('textpoint'));
     }
 
     public function view($id) {
@@ -27,7 +25,14 @@ class RunpointsController extends AppController {
 			'POINT(35.669 139.538)'
 		);
 		foreach($wktarray as $wkt) {
-			$this->Runpoint->save($wkt);
+			$this->Runpoint->create();
+			$this->Runpoint->set(
+				array(
+					'create_timestamp'=>DboSource::expression("NOW()"),
+					'latlng'=>DboSource::expression('PointFromText("'.$wkt.'")')
+					)
+				);
+			$this->Runpoint->save();
 		}
 
 		$this->Session->setFlash('upload completed.');
@@ -35,9 +40,9 @@ class RunpointsController extends AppController {
 	}
 
     public function add() {
-        if ($this->request->is('point')) {
-            if ($this->Point->save($this->request->data)) {
-                $this->Session->setFlash('Your point has been saved.');
+        if ($this->request->is('post')) {
+            if ($this->Runpoint->save($this->request->data)) {
+                $this->Session->setFlash('Your Runpoint has been saved.');
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash('Unable to add your point.');
@@ -46,15 +51,15 @@ class RunpointsController extends AppController {
     }
 
 	public function edit($id = null) {
-   	 $this->Point->id = $id;
+   	 $this->Runpoint->id = $id;
    	 if ($this->request->is('get')) {
-   	     $this->request->data = $this->Point->read();
+   	     $this->request->data = $this->Runpoint->read();
    	 } else {
-   	     if ($this->Point->save($this->request->data)) {
-   	         $this->Session->setFlash('Your point has been updated.');
+   	     if ($this->Runpoint->save($this->request->data)) {
+   	         $this->Session->setFlash('Your Runpoint has been updated.');
    	         $this->redirect(array('action' => 'index'));
    	     } else {
-   	         $this->Session->setFlash('Unable to update your point.');
+   	         $this->Session->setFlash('Unable to update your Runpoint.');
    	     }
    	 }
 	}
@@ -63,8 +68,8 @@ class RunpointsController extends AppController {
    	 if ($this->request->is('get')) {
     	    throw new MethodNotAllowedException();
     	}
-    	if ($this->Point->delete($id)) {
-        	$this->Session->setFlash('The point with id: ' . $id . ' has been deleted.');
+    	if ($this->Runpoint->delete($id)) {
+        	$this->Session->setFlash('The Runpoint with id: ' . $id . ' has been deleted.');
         	$this->redirect(array('action' => 'index'));
     	}
 	}

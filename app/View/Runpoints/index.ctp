@@ -1,5 +1,6 @@
 <!-- File: /app/View/Runpoints/index.ctp -->
 <h1>Your Runpoints</h1>
+<?php echo $this->Html->link('upload', array('controller'=>'runpoints','action'=>'upload')); ?>
 <table>
     <tr>
         <th>Id</th>
