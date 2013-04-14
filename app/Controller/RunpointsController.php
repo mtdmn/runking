@@ -29,7 +29,8 @@ class RunpointsController extends AppController {
 			$this->Runpoint->set(
 				array(
 					'create_timestamp'=>DboSource::expression("NOW()"),
-					'latlng'=>DboSource::expression('PointFromText("'.$wkt.'")')
+//					'latlng'=>DboSource::expression('PointFromText("'.$wkt.'")')
+					'latlng'=>$wkt
 					)
 				);
 			$this->Runpoint->save();

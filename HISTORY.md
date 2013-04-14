@@ -13,7 +13,7 @@ Running Kingdom
 	* Controllerでやってみたところ、PointFromText()関数がクオーテーションでくくられてしまうため、ちゃんとinsertできないことがわかった。ということで、Modelでやるしかないっぽい。
 	* Modelでどうやるかを調べてもすぐにはわからず。結局、dbosource::expressionを使うといのをここで発見した。 http://stackoverflow.com/questions/5864879/how-to-use-mysql-now-function-in-cakephp-for-date-fields
 	* 無駄に時間を使ってしまった。
-
+	* とりあえず、Modelのset()とsave($data)をoverrideして実装した。
 
 2013.3.26
 --------------------
