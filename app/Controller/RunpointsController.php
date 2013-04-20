@@ -16,6 +16,35 @@ class RunpointsController extends AppController {
     }
 
 	public function upload() {
+        if ($this->request->is('post')) {
+			$tmp = $this->request->data['Upload']['file']['tmp_name'];
+			if(is_uploaded_file($tmp)) {
+				// check if the file is in GPX format. XXX
+				// retrieve runpoints extracted from the GPX file.
+				// save these runpoints to the DB.
+/*
+				$file_name = basename($this->request->data['Upload']['file']['name']);
+				$file = WWW_ROOT.'files'.DS.$file_name;
+				if (move_uploaded_file($tmp, $file)) {
+					$this->Upload->create();
+					$this->request->data['Upload']['file_name'] = $file_name;
+					if ($this->Upload->save($this->request->data)) {
+						$this->Session->setFlash(__('The upload has been saved'));
+						$this->redirect(array('action' => 'index'));
+					} else {
+						$this->Session->setFlash(__('The upload could not be saved. Please, try again.'));
+					}
+				}
+*/
+			}
+			$this->Session->setFlash('Something is posted.');
+//                $this->redirect(array('action' => 'index'));
+		} else {
+			$this->Session->setFlash('Post your GPX file.');
+		}
+	}
+
+	public function upload_test() {
 		$wktarray = array(
 			'POINT(35.668 139.537)',
 			'POINT(35.669 139.537)',
