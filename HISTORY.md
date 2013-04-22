@@ -1,6 +1,18 @@
 Running Kingdom
 =======
 
+2013.4.22
+--------------------
+* 自分のkingdom表示がその次のステップ。
+* PHPのframeworkも色々有るらしいけど、cakephpで良かったのかな？
+* 地図について
+	* どうやらgoogle maps apiは有料化してしまったので、使わない方が良さそう。openstreetmapsを使った方が良さそう。しかしこれ、地図を作るのは集合知でやっているのはいいとして、トラフィックが増えてきても大丈夫なのか？
+	* OSM + OpenLayers APIでやってみよう。
+	* こんな感じでいいんじゃね？ http://openlayers.org/dev/examples/boxes-vector.html
+	* OpenLayersのboundsとかその辺を理解しないと使えないぞ。
+* ところで、spモードでテザリングしてるときにsshが切れないようにする方法は無いの？
+	* ServerAliveInterval 60 をssh_configに追加した。
+
 2013.4.20
 --------------------
 * 今日の目標はGPXファイルをアップロードして、それをDBに突っ込むところまで。
@@ -10,7 +22,6 @@ Running Kingdom
 	* ようやく、cakephpでpointsのarrayを取得するところまでできた。
 	* geoPHPのライブラリはcakephp/app/Controller/geoPHP以下に置くことにした。
 	* これをDBに突っ込む処理だん。いくつかファイルをアップしてみたが特にエラーは発生していない。というか、エラー処理全然やってないな。
-* 自分のkingdom表示がその次のステップ。
 
 2013.4.14
 --------------------
