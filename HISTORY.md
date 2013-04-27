@@ -4,7 +4,15 @@ Running Kingdom
 2013.4.27
 --------------------
 * GW中になんとか形にするぞー！
-* え、OpenLayersはlonlatなEPSG:4326な表現手法は基本的に使わないらしい。EPSG:900913とかいうのを使え、と。orz
+* え、OpenLayersはlonlatなEPSG:4326な表現手法は基本的に使わないらしい。EPSG:900913とかいうのを使え、と。変換はできるらしい。
+	* でも、サンプルコード見たら、めっちゃEPSG:4326で書かれてるっぽいが。
+* ちょっとHTMLいじくってたらDOCTYPEでハマった。互換モードでしか動かないコードを書いてしまったのが原因らしい。面倒なので互換モードにしとこう。
+	* http://tech.bayashi.jp/archives/entry/techweb/2009/002506.html
+	* http://www.dspt.net/html_tag/mode.html
+* ということでsmallmapから脱却できた。
+* setCenterを覚えた。ついでにzoomも覚えた。
+* WMSの地図だけじゃ殺風景なので、もうちょっといい感じのものに変えたい。
+* 座標データはajaxでサーバから拾ってくる感じかな。
 
 2013.4.22
 --------------------
