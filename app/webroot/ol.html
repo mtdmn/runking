@@ -1,66 +1,85 @@
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <title>Your Kingdom Map</title>
-        <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" type="text/css">
-        <link rel="stylesheet" href="http://openlayers.org/dev/examples/style.css" type="text/css">
-        <script src="http://openlayers.org/dev/OpenLayers.js"></script>
-        <script type="text/javascript">
-            var box_extents = [
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>Your Kingdom Map</title>
+		<link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" type="text/css">
+		<link rel="stylesheet" href="http://openlayers.org/dev/examples/style.css" type="text/css">
+		<script src="http://openlayers.org/dev/OpenLayers.js"></script>
+		<script type="text/javascript">
+			var box_extents = [
 				[139.5455, 35.6865, 139.5465, 35.6875],
 				[139.5455, 35.6875, 139.5465, 35.6885],
 				[139.5455, 35.6885, 139.5465, 35.6895],
 				[139.5465, 35.6895, 139.5475, 35.6905],
 				[139.5455, 35.6895, 139.5465, 35.6905],
-            ];
-            var map;
-            function init(){
-                map = new OpenLayers.Map('map');
+			];
+			var map;
+			function init(){
+				map = new OpenLayers.Map('map');
 
-                var ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
-                    "http://vmap0.tiles.osgeo.org/wms/vmap0?", {layers: 'basic'} );
+				var boxes  = new OpenLayers.Layer.Vector( "Boxes" );
 
-var layer = new OpenLayers.Layer.Vector();
-var panelControls = [
- new OpenLayers.Control.Navigation(),
- new OpenLayers.Control.DrawFeature(layer,
-     OpenLayers.Handler.Path,
-     {'displayClass': 'olControlDrawFeaturePath'})
-];
-var toolbar = new OpenLayers.Control.Panel({
-   displayClass: 'olControlEditingToolbar',
-   defaultControl: panelControls[0]
-});
-toolbar.addControls(panelControls);
-map.addControl(toolbar);
+				var mapnik = new OpenLayers.Layer.OSM();
+				mapnik.opacity = 0.3;
+				map.addLayer(mapnik);
 
-                map.addControl(new OpenLayers.Control.LayerSwitcher());
-                var sf = new OpenLayers.Control.SelectFeature(boxes);
-                map.addControl(sf);
-                sf.activate();
-//                map.zoomToMaxExtent();
-// Ensure that center is not set
-if (!map.getCenter()) {
-    map.setCenter(new OpenLayers.LonLat(139.546, 35.689), 12);
-}
-            }
-        </script>
-    </head>
-    <body onload="init()">
-        <h1 id="title">Your Kingdom Map</h1>
+				var lonLat = new OpenLayers.LonLat(139.5455, 35.6895).transform(
+					new OpenLayers.Projection("EPSG:4326"), 
+					new OpenLayers.Projection("EPSG:900913")
+				);
+				map.setCenter(lonLat, 14);
 
-        <div id="tags">
-            box, vector, annotation, light
-        </div>
+				for (var i = 0; i < box_extents.length; i++) {
+					ext = box_extents[i];
+					bounds = OpenLayers.Bounds.fromArray(ext).transform(
+						new OpenLayers.Projection("EPSG:4326"), 
+						new OpenLayers.Projection("EPSG:900913")
+					);
+					box = new OpenLayers.Feature.Vector(bounds.toGeometry());
+					boxes.addFeatures(box);
+				}
 
-        <p id="shortdesc">
-            Demonstrate marker and box type annotations on a map.
-        </p>
-        
-        <div id="map" style="width:100%; height:100%"></div>
+/* performance test
+				for (var i=0; i< 0.05; i = i+ 0.001) {
+					for (var j=0; j< 0.05; j = j+0.001) {
+						ext2 = [139.5455 + i, 35.6885 + j, 139.5465 + i, 35.6895+ j];
+						bounds = OpenLayers.Bounds.fromArray(ext2).transform(
+							new OpenLayers.Projection("EPSG:4326"), 
+							new OpenLayers.Projection("EPSG:900913")
+						);
+						box = new OpenLayers.Feature.Vector(bounds.toGeometry());
+						boxes.addFeatures(box);
+					}
+				}
+*/
 
-        <div id="docs"></div>
-    </body>
+				map.addLayer(boxes);
+				map.addControl(new OpenLayers.Control.LayerSwitcher());
+				var sf = new OpenLayers.Control.SelectFeature(boxes);
+				map.addControl(sf);
+				sf.activate();
+
+				if (!map.getCenter()) {
+					map.setCenter(new OpenLayers.LonLat(139.546, 35.689), 12);
+				}
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		<h1 id="title">Your Kingdom Map</h1>
+
+		<div id="tags">
+			box, vector, annotation, light
+		</div>
+
+		<p id="shortdesc">
+			Demonstrate marker and box type annotations on a map.
+		</p>
+		
+		<div id="map" style="width:100%; height:100%"></div>
+
+		<div id="docs"></div>
+	</body>
 </html>

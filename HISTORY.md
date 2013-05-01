@@ -1,6 +1,27 @@
 Running Kingdom
 =======
 
+2013.5.1
+--------------------
+* at ICU tellace
+* ベースレイヤー画像選び
+	* http://mc.bbbike.org/mc/?num=2&mt0=mapnik&mt1=mapnik-bw
+	* これのEsri Topoっていうのがいい感じである。 
+	* というか、OSM mapnikに他のレイヤーをかぶせて色を薄くすればなんとでもなる。
+* OSMで、lonlatを使いこなせるようになろう。
+	* transformでlonlatから変換すればいいだけっぽい。boxesが増えてくれば処理が重たくなるかもしれないけど、とりあえずこれでいいか。
+	* 50x50個のboxで負荷テストしてみたけど、ブラウザの負荷としては大したことはないっぽい on Firefox
+
+2013.4.30
+--------------------
+* git ignoreの設定。
+  $ echo "*.swp" >> ~/.gitignore_global  # ファイル名は好きなもので OK
+  $ echo ".DS_Store" >> ~/.gitignore_global
+  $ git config --global core.excludesfile ~/.gitignore_global
+* WMSじゃなくてOpenStreetMapをベース画像として使ってみた。
+  * OpenLayers.Layer.OSM()
+  * しかし、ケバい色使いで、全然重ねられそうにないんだけど。google mapの色使いはやっぱり秀逸だなぁ。
+
 2013.4.27
 --------------------
 * GW中になんとか形にするぞー！
