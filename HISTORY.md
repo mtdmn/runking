@@ -11,6 +11,7 @@ Running Kingdom
 * OSMで、lonlatを使いこなせるようになろう。
 	* transformでlonlatから変換すればいいだけっぽい。boxesが増えてくれば処理が重たくなるかもしれないけど、とりあえずこれでいいか。
 	* 50x50個のboxで負荷テストしてみたけど、ブラウザの負荷としては大したことはないっぽい on Firefox
+	* git-config edited.
 
 2013.4.30
 --------------------
