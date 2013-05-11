@@ -1,6 +1,8 @@
 <!-- File: /app/View/Runpoints/index.ctp -->
 <h1>Your Runpoints</h1>
 <?php echo $this->Html->link('upload gpx file', array('controller'=>'runpoints','action'=>'upload')); ?>
+<br>
+<?php echo $this->Html->link('map view', array('controller'=>'runpoints','action'=>'map')); ?>
 <table>
     <tr>
         <th>Id</th>

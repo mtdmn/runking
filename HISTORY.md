@@ -16,8 +16,12 @@ Running Kingdom
 	* parseしたものをjavascriptのboxとしてべた書きしてとりあえず表示するところまでできた。あれでもなんか表示がおかしい。
 	* どうやらDBに入っているデータがおかしくて、中抜きになってしまっている。
 	* GpxParser.phpのclass化したときに、最後にreturnする部分の処理が間違っていたので修正。
-
 * 同じ位置のエントリーが複数DBに入っちゃってる予感。
+	* どうやって重複エントリーを防ぐか。
+	* 重複エントリーはするけど、有効なものだけにフラグを付けるようにするとか。
+	* UNIQUEをpoint型に追加してみた。INSERTしてdup keyでerrorが発生すると止まってしまう。
+	* INSERTする時に、IGNOREしたりREPLACEにしたり色々とできるらしい。REPLACEにする方向で。CakephpからREPLACEにするいい方法が無いっぽい。
+	* Modelのsaveを使わずに専用のREPLACE INTOクエリーを実行するメソッドを追加して解決。
 
 
 2013.5.1

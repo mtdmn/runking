@@ -16,7 +16,7 @@ class RunpointsController extends AppController {
 	}
 
 	public function map() {
-		$points = $this->Runpoint->find('all', array('limit' => 1000));
+		$points = $this->Runpoint->find('all');
 		foreach ($points as $p) {
 			if (preg_match('/\((\d+\.\d+) (\d+\.\d+)\)/', $p['Runpoint']['latlngtxt'], $matches)) {
 				$np[] = array('Y' => $matches[1], 'X' => $matches[2]);
@@ -44,14 +44,12 @@ class RunpointsController extends AppController {
 				// save these runpoints to the DB.
 				foreach($points as $wkt) {
 					$this->Runpoint->create();
-					$this->Runpoint->set(
+					$this->Runpoint->replaceinto(
 						array(
-							'create_timestamp'=>DboSource::expression("NOW()"),
-//							'latlng'=>DboSource::expression('PointFromText("'.$wkt.'")')
+							'create_timestamp'=>"NOW()",
 							'latlng'=>'POINT('.$wkt.')'
 							)
 						);
-					$this->Runpoint->save();
 				}
 			}
 			$this->Session->setFlash('GPX is uploaded.');
