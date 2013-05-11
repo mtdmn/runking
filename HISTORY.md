@@ -12,6 +12,8 @@ Running Kingdom
 	* それはそうだけどなんかかっこ悪いのぉ
 	* OpenLayers用のLayoutを追加してmetaタグ内でcssとjsを読み込むようにした。
 	* View/Runpoints/map.ctpにol.htmlのscriptコードを移植。bodyタグのonloadは書くのが面倒そうだったので、document.body.onloadを使うことにした。
+	* DBから持ってきたPOINTのWKTをgeophpでデコードしようとしたが、なんだか処理が重たいようだったので、正規表現でparseするようにした。
+	* parseしたものをjavascriptのboxとしてべた書きしてとりあえず表示するところまでできた。あれでもなんか表示がおかしい。
 
 * 同じ位置のエントリーが複数DBに入っちゃってる予感。
 
