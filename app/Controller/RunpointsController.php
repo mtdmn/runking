@@ -16,8 +16,13 @@ class RunpointsController extends AppController {
     }
 
 	public function map() {
-        $this->set('runpoints', $this->Runpoint->find('all'));
-		$this->set('title_for_layout', 'View Kingdom Map');
+        $points = $this->Runpoint->find('all', array('limit' => 1000));
+		foreach ($points as $p) {
+			if (preg_match('/\((\d+\.\d+) (\d+\.\d+)\)/', $p['Runpoint']['latlngtxt'], $matches)) {
+				$np[] = array('Y' => $matches[1], 'X' => $matches[2]);
+			}
+		}
+        $this->set('runpoints', $np);
 		$this->layout = 'openlayer';
 	}
 
