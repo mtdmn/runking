@@ -1,15 +1,6 @@
 <?php
 include_once('geoPHP/geoPHP.inc');
 
-/*
-$value = file_get_contents("./sample.gpx");
-$gpxp = new GpxParser($value);
-$points = $gpxp->getRunpoints();
-foreach ($points as $p) {
-	echo $p."\n";
-}
-*/
-
 # class and function definition
 class Dot {
         public $x;
@@ -98,13 +89,12 @@ class GpxParser {
 		$indots = array();
 		for ($x = $this->x_min; $x <= $this->x_max; $x++) {
 		        for ($y = $this->y_min; $y <= $this->y_max; $y++) {
-		                if (array_key_exists((int)$x,$this->outdots)) {
-		                        if (array_key_exists((int)$y,$this->outdots[$x])) {
+		                if ( array_key_exists((int)$x,$this->outdots) &&
+		                        array_key_exists((int)$y,$this->outdots[$x])) {
 		                                continue;
-		                        } else {
-		                                $indots[$x][$y] = 1;
-		                        }
-		                }
+	                    } else {
+							$indots[$x][$y] = 1;
+						}
 		        }
 		}
 		

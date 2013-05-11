@@ -22,6 +22,8 @@ Running Kingdom
 	* UNIQUEをpoint型に追加してみた。INSERTしてdup keyでerrorが発生すると止まってしまう。
 	* INSERTする時に、IGNOREしたりREPLACEにしたり色々とできるらしい。REPLACEにする方向で。CakephpからREPLACEにするいい方法が無いっぽい。
 	* Modelのsaveを使わずに専用のREPLACE INTOクエリーを実行するメソッドを追加して解決。
+* 特定の軽度の時にpointが無くなる問題が発生。GpxParser.phpのバグっぽい。
+	* invert ringのバグでした。
 
 
 2013.5.1

@@ -18,8 +18,10 @@ class RunpointsController extends AppController {
 	public function map() {
 		$points = $this->Runpoint->find('all');
 		foreach ($points as $p) {
-			if (preg_match('/\((\d+\.\d+) (\d+\.\d+)\)/', $p['Runpoint']['latlngtxt'], $matches)) {
+			if (preg_match('/\((\d+\.?\d*) (\d+\.?\d*)\)/', $p['Runpoint']['latlngtxt'], $matches)) {
 				$np[] = array('Y' => $matches[1], 'X' => $matches[2]);
+			} else {
+				print_r($p);
 			}
 		}
         $this->set('runpoints', $np);
