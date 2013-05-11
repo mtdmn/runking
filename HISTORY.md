@@ -1,6 +1,21 @@
 Running Kingdom
 =======
 
+2013.5.11
+--------------------
+* 早く、自分の走行データをがんがん突っ込めるようにしたい
+* そのためには、あとはJavascriptからkingdomのデータを取得するようにする部分ができていない。
+	* AJAXでやるなら、緯度経度を指定して、その周辺のbox情報を返すようなcgiをサーバに設置することになる？あとユーザIDも？
+	* http://docs.openlayers.org/library/request.html
+	* OpenLayers.Request メソッドなる便利なものがあるらしい
+* とりあえず最初はajaxじゃなくて、最初に自分のkingdomのデータを全部取得するようにすればいいか？
+	* それはそうだけどなんかかっこ悪いのぉ
+	* OpenLayers用のLayoutを追加してmetaタグ内でcssとjsを読み込むようにした。
+	* View/Runpoints/map.ctpにol.htmlのscriptコードを移植。bodyタグのonloadは書くのが面倒そうだったので、document.body.onloadを使うことにした。
+
+* 同じ位置のエントリーが複数DBに入っちゃってる予感。
+
+
 2013.5.1
 --------------------
 * at ICU tellace

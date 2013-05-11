@@ -41,20 +41,6 @@
 					boxes.addFeatures(box);
 				}
 
-/* performance test
-				for (var i=0; i< 0.05; i = i+ 0.001) {
-					for (var j=0; j< 0.05; j = j+0.001) {
-						ext2 = [139.5455 + i, 35.6885 + j, 139.5465 + i, 35.6895+ j];
-						bounds = OpenLayers.Bounds.fromArray(ext2).transform(
-							new OpenLayers.Projection("EPSG:4326"), 
-							new OpenLayers.Projection("EPSG:900913")
-						);
-						box = new OpenLayers.Feature.Vector(bounds.toGeometry());
-						boxes.addFeatures(box);
-					}
-				}
-*/
-
 				map.addLayer(boxes);
 				map.addControl(new OpenLayers.Control.LayerSwitcher());
 				var sf = new OpenLayers.Control.SelectFeature(boxes);
@@ -64,6 +50,18 @@
 				if (!map.getCenter()) {
 					map.setCenter(new OpenLayers.LonLat(139.546, 35.689), 12);
 				}
+
+				function handler(request) {
+				    // and of course you can get headers
+				    alert(request.getAllResponseHeaders());
+				    // etc.
+				}
+
+				var request = OpenLayers.Request.GET({
+				    url: "http://vps.arifumi.net/cakephp/",
+				    params: {somekey: "some value & this will be encoded properly"},
+				    callback: handler
+				});
 			}
 		</script>
 	</head>

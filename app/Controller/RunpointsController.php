@@ -15,6 +15,12 @@ class RunpointsController extends AppController {
 
     }
 
+	public function map() {
+        $this->set('runpoints', $this->Runpoint->find('all'));
+		$this->set('title_for_layout', 'View Kingdom Map');
+		$this->layout = 'openlayer';
+	}
+
 	public function upload() {
         if ($this->request->is('post')) {
 			$tmp = $this->request->data['Runpoint']['GPX']['tmp_name'];
