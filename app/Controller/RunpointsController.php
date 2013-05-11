@@ -2,21 +2,21 @@
 include_once('GpxParser.php');
 
 class RunpointsController extends AppController {
-    public $helpers = array('Html', 'Form', 'Session');
-    public $components = array('Session');
+	public $helpers = array('Html', 'Form', 'Session');
+	public $components = array('Session');
 
-    public function index() {
-        $this->set('runpoints', $this->Runpoint->find('all'));
-    }
+	public function index() {
+		$this->set('runpoints', $this->Runpoint->find('all'));
+	}
 
-    public function view($id) {
-        $this->Runpoint->id = $id;
-        $this->set('runpoint', $this->Runpoint->read());
+	public function view($id) {
+		$this->Runpoint->id = $id;
+		$this->set('runpoint', $this->Runpoint->read());
 
-    }
+	}
 
 	public function map() {
-        $points = $this->Runpoint->find('all', array('limit' => 1000));
+		$points = $this->Runpoint->find('all', array('limit' => 1000));
 		foreach ($points as $p) {
 			if (preg_match('/\((\d+\.\d+) (\d+\.\d+)\)/', $p['Runpoint']['latlngtxt'], $matches)) {
 				$np[] = array('Y' => $matches[1], 'X' => $matches[2]);
@@ -27,7 +27,7 @@ class RunpointsController extends AppController {
 	}
 
 	public function upload() {
-        if ($this->request->is('post')) {
+		if ($this->request->is('post')) {
 			$tmp = $this->request->data['Runpoint']['GPX']['tmp_name'];
 			// check file upload error.
 			if ($this->request->data['Runpoint']['GPX']['error']!=0) {

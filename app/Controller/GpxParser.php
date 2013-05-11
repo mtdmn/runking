@@ -5,7 +5,9 @@ include_once('geoPHP/geoPHP.inc');
 $value = file_get_contents("./sample.gpx");
 $gpxp = new GpxParser($value);
 $points = $gpxp->getRunpoints();
-print_r($points);
+foreach ($points as $p) {
+	echo $p."\n";
+}
 */
 
 # class and function definition
@@ -106,8 +108,10 @@ class GpxParser {
 		        }
 		}
 		
-		foreach ( $dots as $d ) {
-		        $wkt[] = $d->y/$this->GEOPOW." ".$d->x/$this->GEOPOW;
+		foreach ( $indots as $x => $yarray ) {
+			foreach ( $yarray as $y => $v ) {
+		        $wkt[] = $y/$this->GEOPOW." ".$x/$this->GEOPOW;
+			}
 		}
 		return $wkt;
 	}
