@@ -8,11 +8,17 @@ Running Kingdom
 * runkeeper連携 http://developer.runkeeper.com/healthgraph
 	* まずはAPIを眺めて当たりをつける
 	* ユーザDBテーブルのスキーマ設計
-* cakephp用のoauthライブラリ http://code.42dh.com/oauth/
-* https://runkeeper.com/apps/authorize?client_id=fa85c607244c491f825f66e8dcf704ef&response_type=code&redirect_uri=http://vps.arifumi.net
+	* cakephp用のoauthライブラリ http://code.42dh.com/oauth/
+	* https://runkeeper.com/apps/authorize?client_id=fa85c607244c491f825f66e8dcf704ef&response_type=code&redirect_uri=http://vps.arifumi.net
 	* 結局、ほとんどライブラリのお世話になることなく、tokenを取得できた。でもこれって、ちゃんとOAuth実装できてんのかな。
-* code: 24ae2d4bfdcc44ff90aaf66157ad56ab
-* token: d3819b92bb874523b9c0e18ba9351c51
+* jsonフォーマットでpathが降ってくるので、これをWKTとかに変換してあげないといけない。
+	* GpxParserクラスのコンストラクタでGPXとWKT(LINESTRING)を選択できるようにしないといけない。
+	* https://api.runkeeper.com//fitnessActivities/[activity_id]?access_token=xxx
+* ユーザーアカウントに関する処理
+	* 最初にrunkeeper連携が終わった時の処理。
+	* DBにアカウントを作成する。useridはrunkeeperと同じでいい気がする。
+	* いや、やっぱりuseridはsequencialにintegerで付けて、RK連携のユーザにはRKIDのフィールドを埋めるようにしよう。
+	* 名前とかは連携させた時に取ってきたい。
 
 2013.5.11 at library
 --------------------
