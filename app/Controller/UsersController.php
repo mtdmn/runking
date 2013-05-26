@@ -1,4 +1,5 @@
 <?php
+include_once('RkLib.php');
 
 class UsersController extends AppController {
 	private $RK_access_token;

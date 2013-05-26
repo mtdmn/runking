@@ -17,6 +17,11 @@ codiadというのをそのうち試してみよう。
 	* workoutテーブルにrunkeeperのactivity idを入れるようにする。
 	* runpointにもworkdout idを付けられるようにしよう。
 * workout, userのindex()とindex.ctpを作成。
+* console(cron)からの実行方法についてお勉強
+	* sudo -u apache /usr/bin/php ../cake.php Runkeeper "" "" -app /var/www/arifumi_net/data/cakephp/app
+	* consoleで実行して、usersを持ってきて、user毎にrunkeeperのactivityを持ってくるところまで実装。
+	* Q. ところでこのAPIのrate limitとかはどうなってるんだろう？
+* Runkeeper関係の処理をlibraryにまとめうとしたけど、そのファイルの置き場としていい場所がなく、include_pathを変更するのも大変そうだったので、やめた。 
 * この自動処理が終われば、あとはユーザーインターフェースを作り込んだら、一通り実装完了かな。
 	
 2013.5.18 at library
