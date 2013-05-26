@@ -16,6 +16,7 @@ codiadというのをそのうち試してみよう。
 	* 重複投入をさけるために、workoutの管理はやっぱり必要か。
 	* workoutテーブルにrunkeeperのactivity idを入れるようにする。
 	* runpointにもworkdout idを付けられるようにしよう。
+* workout, userのindex()とindex.ctpを作成。
 * この自動処理が終われば、あとはユーザーインターフェースを作り込んだら、一通り実装完了かな。
 	
 2013.5.18 at library

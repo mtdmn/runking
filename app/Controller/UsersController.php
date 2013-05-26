@@ -6,6 +6,10 @@ class UsersController extends AppController {
 	private $RK_profile_json;
 	private $RK_API_URL = 'http://api.runkeeper.com';
 
+	public function index() {
+		$this->set('users', $this->User->find('all'));
+	}
+
     public function authorize() {
         $this->redirect('https://runkeeper.com/apps/authorize?'.
 			'client_id=fa85c607244c491f825f66e8dcf704ef'.
