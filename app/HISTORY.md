@@ -10,6 +10,13 @@ codiadというのをそのうち試してみよう。
 	* authorizeした時に、登録済みかどうかを確認して、未登録ならdbにinsertする。
 * controllerの命名規則(単複)がおかしかったので修正。
 	http://www.cpa-lab.com/tech2/inflects/
+* さて次はactivityを持ってくる部分。
+	* cronで実行する処理なので、別ファイルで実装しよう。
+	* userテーブルから、rkidとtokenを拾ってきて、24時間以内のactivityを取得する。
+	* 重複投入をさけるために、workoutの管理はやっぱり必要か。
+	* workoutテーブルにrunkeeperのactivity idを入れるようにする。
+	* runpointにもworkdout idを付けられるようにしよう。
+* この自動処理が終われば、あとはユーザーインターフェースを作り込んだら、一通り実装完了かな。
 	
 2013.5.18 at library
 --------------------
