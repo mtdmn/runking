@@ -41,7 +41,7 @@ class RunpointsController extends AppController {
 			if(is_uploaded_file($tmp)) {
 				$value = file_get_contents($tmp);
 				// retrieve runpoints extracted from the GPX file.
-				$gpxp = new GpxParser($value);
+				$gpxp = new GpxParser($value, 'gpx');
 				$points = $gpxp->getRunpoints();
 				// save these runpoints to the DB.
 				foreach($points as $wkt) {

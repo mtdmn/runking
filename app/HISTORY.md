@@ -1,6 +1,17 @@
 Running Kingdom
 =======
 
+2013.7.13 at library
+--------------------
+* 完全に放置してしまったので、何をやっていたのか復習モード。
+* Runkeeper.shellってなんぞ？
+* appディレクトリで、cake runkeeper だけで実行できるっぽい。いじるしかない。
+* dbへの登録はGPXファイルを持ってくることができれば、同じ処理が使い回せるが、どうもそんなAPIは無さそう。
+	* GpxParserをwktとかgpxとかの種類を食わせるようなコンストラクタに変更した。
+* Console/に置いたスクリプトを実行する場合、Controller/配下に置いたライブラリをincludeしようとすると、include_pathに無いと怒られる。app毎にinclude_pathを追加できればいいんだけど。
+	* Console/cake.phpとwebroot/index.phpを編集して、include_pathにapp/Libを追加して、そこにGpxParser関係を置くようにした。
+* 次はDBに突っ込んでいく処理。
+
 2013.5.26 at library
 --------------------
 * icecoderをちょっと試してみたものの、パーミッションの設定は合っているはずなのに、エラーも出ず保存できないという問題、UTF-8のエンコードで書いた日本語を表示しようとすると、他のエンコードに変換されてしまって表示されない、という問題に遭遇してやめた。
