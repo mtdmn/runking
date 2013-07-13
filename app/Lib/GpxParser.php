@@ -41,7 +41,6 @@ class GpxParser {
 		foreach ( $geometry2->getComponents() as $a ) {
 			$newarray[] =  round($a->getX(),$this->GEOUNIT)." ".round($a->getY(),$this->GEOUNIT);
 		}
-		echo 'LINESTRING('.join($newarray,",").')';
 		$geo3 = geoPHP::load('LINESTRING('.join($newarray,",").')','wkt');
 
 		$last_point = false;

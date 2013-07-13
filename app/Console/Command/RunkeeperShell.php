@@ -5,15 +5,28 @@ include_once('GpxParser.php');
 
 class RunkeeperShell extends AppShell {
 	public $RK_API_URL = 'http://api.runkeeper.com';
-	public $uses = array('User', 'Workout');
+	public $uses = array('User', 'Workout', 'Runpoint');
 
 	public function main() {
+		$activities;
 		$users = $this->User->find('all', array(
 			'conditions' => array( 'type' => 'runkeeper' )
 		));
-//		var_dump($users);
 		foreach ($users as $u) {
-			$this->fetchactivity($u['User']['rktoken']);
+			$activities = $this->fetchactivity($u['User']['rktoken']);
+			foreach ($activities as $act) {
+				foreach ($act['points'] as $wkt) {
+					preg_match('/, (\S+)/', $act['start_time'], $matches);
+					$this->Runpoint->create();
+					$this->Runpoint->replaceinto(
+						array(
+							'create_timestamp'=> "NOW()",
+							'latlng'=>'POINT('.$wkt.')',
+							'user'=>$u['User']['id']
+						)
+					);
+				}
+			}
 		}
 	}
 
@@ -22,9 +35,10 @@ class RunkeeperShell extends AppShell {
 		$file = file_get_contents($url);
 
 		$RK_activity_json = json_decode($file);
-		$path = array();
+		$activities = array();
 		foreach ($RK_activity_json->{'items'} as $i) {
 			if ($i->{'has_path'}==true) {
+				$path = array();
 				$url = $this->RK_API_URL.$i->{'uri'}.'?access_token='.$token;
 				$file = file_get_contents($url);
 				$RK_activity_detail_json = json_decode($file);
@@ -34,13 +48,12 @@ class RunkeeperShell extends AppShell {
 				$wkt = 'LINESTRING('. join(',', $path) .')';
 				$gpxp = new GpxParser($wkt, 'wkt');
 				$points = $gpxp->getRunpoints();
-				echo "latitude,longitude\n";
-				foreach ($points as $p) {
-			        preg_match('/(\S+) (\S+)/', $p, $matches);
-				    echo $matches[1].",".$matches[2]."\n";
-				}
+				$activities[] = array("points"=> $points,
+					"start_time"=> $RK_activity_detail_json->{'start_time'}
+				);
 			}
 		}
+		return $activities;
 	}
 }
 
