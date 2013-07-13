@@ -5,12 +5,13 @@ class Runpoint extends AppModel {
 	function replaceinto($data=null, $validate=true, $fieldList=array()) {
 		$sql = "REPLACE INTO `runking`.`runpoints`
 			(
-				`create_timestamp`, `latlng`, `user`) VALUES 
+				`change_timestamp`, `latlng`, `userid`, `workoutid`) VALUES 
 
 			(
-				".$data['create_timestamp'].",
+				".$data['change_timestamp'].",
 				PointFromText('".$data['latlng']."') ,
-				".$data['user']."
+				".$data['userid'].",
+				".$data['workoutid']."
 			)";
 
 		return $this->query($sql);

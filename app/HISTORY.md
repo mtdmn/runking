@@ -10,7 +10,12 @@ Running Kingdom
 	* GpxParserをwktとかgpxとかの種類を食わせるようなコンストラクタに変更した。
 * Console/に置いたスクリプトを実行する場合、Controller/配下に置いたライブラリをincludeしようとすると、include_pathに無いと怒られる。app毎にinclude_pathを追加できればいいんだけど。
 	* Console/cake.phpとwebroot/index.phpを編集して、include_pathにapp/Libを追加して、そこにGpxParser関係を置くようにした。
-* 次はDBに突っ込んでいく処理。
+* DBに突っ込む処理完了。replaceintoを使うために、Model/User.phpでsqlべた書きしているので、フィールドが増えたらいちいちModelをいじらないといけない。
+	* timestampの部分がちゃんと入ってないので、runkeeperのjsonのtimestampからmysqlの理解できるtimestampに変換しないといけない。"Tue, 1 Mar 2011 07:00:00",
+	* Runpointテーブルのlatlngをprimary keyにして、replace intoをうまく使えるように変更。pointidは削除。
+* workoutテーブルにも突っ込むようにした。既に同じactivityが登録されていればrunpointの登録をskipするようにした。
+* RunpointテーブルにWorkout_IDを追加した。
+* TODO: view mapで複数ユーザを色分けしながら表示するようにしたい。
 
 2013.5.26 at library
 --------------------

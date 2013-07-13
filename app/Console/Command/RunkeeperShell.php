@@ -15,14 +15,30 @@ class RunkeeperShell extends AppShell {
 		foreach ($users as $u) {
 			$activities = $this->fetchactivity($u['User']['rktoken']);
 			foreach ($activities as $act) {
+				$time = strtotime($act['start_time']);
+				$mytime = date('Y-m-d H:i:s', $time);
+				$nowtime = date('Y-m-d H:i:s');
+				$result = $this->Workout->find('first', array(
+				        'conditions' => array('rkactid' => $act['actid'])));
+				if ($result) continue;
+				$this->Workout->create( array("Workout"=> array(
+					"userid" => $u['User']['id'],
+					"rkactid" => $act['actid'],
+					"starttime" => $mytime,
+					"importtime" => $nowtime,
+					"type" => $act['type'] 
+				)));
+				$this->Workout->save();
+				$workoutid = $this->Workout->id;
+
 				foreach ($act['points'] as $wkt) {
-					preg_match('/, (\S+)/', $act['start_time'], $matches);
 					$this->Runpoint->create();
 					$this->Runpoint->replaceinto(
 						array(
-							'create_timestamp'=> "NOW()",
-							'latlng'=>'POINT('.$wkt.')',
-							'user'=>$u['User']['id']
+							'change_timestamp' => "'".$mytime."'",
+							'latlng' => 'POINT('.$wkt.')',
+							'workoutid' => $workoutid,
+							'userid' => $u['User']['id']
 						)
 					);
 				}
@@ -48,8 +64,11 @@ class RunkeeperShell extends AppShell {
 				$wkt = 'LINESTRING('. join(',', $path) .')';
 				$gpxp = new GpxParser($wkt, 'wkt');
 				$points = $gpxp->getRunpoints();
-				$activities[] = array("points"=> $points,
-					"start_time"=> $RK_activity_detail_json->{'start_time'}
+				$activities[] = array(
+					"points"=> $points,
+					"start_time"=> $RK_activity_detail_json->{'start_time'},
+					"type" => $RK_activity_detail_json->{'type'},
+					"actid" => $RK_activity_detail_json->{'uri'}
 				);
 			}
 		}
