@@ -1,6 +1,16 @@
 Running Kingdom
 =======
 
+2013.7.28 at library
+--------------------
+* 画面遷移イメージを作成した。紙ベース。
+* TODO: view mapで複数ユーザを色分けしながら表示するようにしたい。
+	* そのためにはもう一人ぐらいユーザを追加。
+	* 追加したけど、fitnessActivityをfetchできなくなっている。何故だ？runkeeperのアプリケーションの設定で、fitness activityを読み込む権限が必要だった。
+* パスワード情報が平文で書かれているので、どっかのファイルにまとめてそのファイルをアップしないようにしよう。app/Lib/runkeeper_settings.php にまとめた。
+* 既存のユーザがauthorizeしたときにNULLでuserテーブルにアカウントが追加されてしまうバグを発見したので、authorizeでerrorが帰ってきた時には何もしない処理を追加。
+* phpmyadminのtimeoutを延長するconfigを入れた。
+
 2013.7.13 at library
 --------------------
 * 完全に放置してしまったので、何をやっていたのか復習モード。

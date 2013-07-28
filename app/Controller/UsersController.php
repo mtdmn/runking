@@ -1,10 +1,12 @@
 <?php
 
+include_once('runkeeper_settings.php');
+
 class UsersController extends AppController {
 	private $RK_access_token;
 	private $RK_user_json;
 	private $RK_profile_json;
-	private $RK_API_URL = 'http://api.runkeeper.com';
+	private $RK_API_URL = RK_API_URL;
 
 	public function index() {
 		$this->set('users', $this->User->find('all'));
@@ -12,7 +14,7 @@ class UsersController extends AppController {
 
     public function authorize() {
         $this->redirect('https://runkeeper.com/apps/authorize?'.
-			'client_id=fa85c607244c491f825f66e8dcf704ef'.
+			RK_APP_ID.
 			'&redirect_uri='.
 			'http://' . $_SERVER['HTTP_HOST'].'/cakephp/users/callback'.
 			'&response_type=code'
@@ -20,6 +22,11 @@ class UsersController extends AppController {
     }
 
     public function callback() {
+		if (array_key_exists('error', $this->request->query)) {
+			$this->set('contents', "authorization failed: ".$this->request->query['error']);
+			return;
+		}
+
 		if ($this->request->is('get')) {
 			$code = $this->request->query['code'];
 		}
@@ -27,8 +34,8 @@ class UsersController extends AppController {
 		$data = array(
 			'grant_type' => 'authorization_code',
 			'code' => $code,
-			'client_id' => 'fa85c607244c491f825f66e8dcf704ef',
-			'client_secret' => 'c2f2397af19143338a5c2776dcc59f3c',
+			'client_id' => RK_APP_ID,
+			'client_secret' => RK_APP_SECRET,
 			'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'].'/cakephp/users/callback'
 		);
 
@@ -66,11 +73,14 @@ class UsersController extends AppController {
 					'type' => 'runkeeper',
 					'rkid' => $this->RK_user_json->{'userID'},
 					'rkname' => $this->RK_profile_json->{'name'},
-					'rkgender' => $this->RK_profile_json->{'gender'},
-					'rkpicture' => $this->RK_profile_json->{'normal_picture'},
 					'rktoken' => $this->RK_access_token
 				)
 			);
+			// optional fields
+			if (property_exists($this->RK_profile_json, 'gender'))
+				$data['User']['rkgender'] = $this->RK_profile_json->{'gender'};
+			if (property_exists($this->RK_profile_json, 'normal_picture'))
+				$data['User']['rkpicture'] = $this->RK_profile_json->{'normal_picture'};
 			$this->User->save($data);
 			$this->set('contents', $this->RK_user_json->{'userID'});
 		}
