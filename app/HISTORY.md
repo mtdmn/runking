@@ -10,6 +10,7 @@ Running Kingdom
 * パスワード情報が平文で書かれているので、どっかのファイルにまとめてそのファイルをアップしないようにしよう。app/Lib/runkeeper_settings.php にまとめた。
 * 既存のユーザがauthorizeしたときにNULLでuserテーブルにアカウントが追加されてしまうバグを発見したので、authorizeでerrorが帰ってきた時には何もしない処理を追加。
 * phpmyadminのtimeoutを延長するconfigを入れた。
+* repogitoryの初期化。
 
 2013.7.13 at library
 --------------------
